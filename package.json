@@ -1,0 +1,8 @@
+{
+  "name": "next-firebase",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:CagriUysal/next-firebase.git",
+  "author": "cagri <muysal.cagri@gmail.com>",
+  "license": "MIT"
+}
