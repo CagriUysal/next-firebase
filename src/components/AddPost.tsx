@@ -1,27 +1,33 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
 
-function AddPost({ onCreate }: any) {
+import { db } from "utils/firebase";
+
+const createPost = (post: any) => {
+  addDoc(collection(db, "posts"), post);
+};
+
+function AddPost() {
   const [formData, setFormData] = useState({ title: "", content: "" });
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const post = {
-      id: Date.now().toString(),
       title,
       content,
       user: {
         uid: "1111",
-        displayName: "Steve Kinney",
-        email: "steve@mailinator.com",
+        displayName: "Cagri Uysal",
+        email: "muysal.cagri@gmail.com.com",
         photoURL: "http://placekitten.com/g/200/200",
       },
       favorites: 0,
       comments: 0,
-      createdAt: new Date(),
+      // createdAt: new Date(),
     };
 
-    onCreate(post);
+    createPost(post);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
