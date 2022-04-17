@@ -4,7 +4,7 @@ import SignInAndSignUp from "./SignInAndSignUp";
 function Authentication({ user, loading }: any) {
   if (loading) return null;
 
-  return <div>{user ? <CurrentUser /> : <SignInAndSignUp />}</div>;
+  return <>{user ? <CurrentUser {...user} /> : <SignInAndSignUp />}</>;
 }
 
 export default Authentication;
