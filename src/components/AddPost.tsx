@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 
-import { db } from "utils/firebase";
+import { db, auth } from "utils/firebase";
 
 const createPost = (post: any) => {
   addDoc(collection(db, "posts"), post);
@@ -13,14 +13,22 @@ function AddPost() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const currentUser = auth.currentUser;
+    if (currentUser === null) {
+      console.error("Can't create a new post! Please sign-in.");
+      return;
+    }
+
+    console.log(currentUser);
+    const { uid, displayName, email, photoURL } = currentUser;
     const post = {
       title,
       content,
       user: {
-        uid: "1111",
-        displayName: "Cagri Uysal",
-        email: "muysal.cagri@gmail.com.com",
-        photoURL: "http://placekitten.com/g/200/200",
+        uid,
+        displayName,
+        email,
+        photoURL,
       },
       favorites: 0,
       comments: 0,

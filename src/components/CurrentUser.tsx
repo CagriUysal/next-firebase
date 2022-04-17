@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "constants/date";
+import { auth } from "utils/firebase";
 
 function CurrentUser({
   displayName,
@@ -9,6 +10,10 @@ function CurrentUser({
   createdAt,
   children,
 }: any) {
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+
   return (
     <section className="CurrentUser">
       <div className="CurrentUser--profile">
@@ -21,7 +26,7 @@ function CurrentUser({
       </div>
       <div>
         <div>{children}</div>
-        <button>Sign Out</button>
+        <button onClick={handleSignOut}>Sign Out</button>
       </div>
     </section>
   );
