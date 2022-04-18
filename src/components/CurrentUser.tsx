@@ -21,7 +21,9 @@ function CurrentUser({
         <div className="CurrentUser--information">
           <h2>{displayName}</h2>
           <p className="email">{email}</p>
-          <p className="created-at">{dayjs(createdAt).format(DATE_FORMAT)}</p>
+          <p className="created-at">
+            {dayjs(createdAt.toDate()).format(DATE_FORMAT)}
+          </p>
         </div>
       </div>
       <div>

@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 import { db, auth } from "utils/firebase";
 
@@ -32,7 +32,7 @@ function AddPost() {
       },
       favorites: 0,
       comments: 0,
-      // createdAt: new Date(),
+      createdAt: serverTimestamp(),
     };
 
     createPost(post);

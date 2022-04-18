@@ -3,7 +3,7 @@ import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 import Posts from "components/Posts";
-import { auth, db } from "utils/firebase";
+import { auth, createUserProfile, db } from "utils/firebase";
 import Authentication from "components/Authentication";
 
 export async function getServerSideProps() {
@@ -32,7 +32,14 @@ function Home() {
       setPosts(posts);
     });
 
-    const unsubAuth = onAuthStateChanged(auth, (user) => {
+    const unsubAuth = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser === null) {
+        console.log("hello");
+        setUser(null);
+        return;
+      }
+
+      const user = await createUserProfile(currentUser);
       setUser(user);
     });
 

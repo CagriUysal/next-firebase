@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, createUserProfile } from "utils/firebase";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -6,6 +8,7 @@ function SignUp() {
     password: "",
     displayName: "",
   });
+  const { email, password, displayName } = formData;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -13,13 +16,23 @@ function SignUp() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      createUserProfile(user, { displayName });
+    } catch (error) {
+      console.error(error);
+    }
 
     setFormData({ displayName: "", email: "", password: "" });
   };
-
-  const { email, password, displayName } = formData;
 
   return (
     <form className="SignUp" onSubmit={handleSubmit}>
