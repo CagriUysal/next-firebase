@@ -39,7 +39,7 @@ function Post({
             {comments}
           </p>
           <p>Posted by {user.displayName}</p>
-          <p>{dayjs(createdAt.toDate()).format(DATE_FORMAT)}</p>
+          <p>{dayjs(createdAt?.toDate()).format(DATE_FORMAT)}</p>
         </div>
         <div>
           <button className="star" onClick={handleStar}>

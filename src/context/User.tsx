@@ -15,11 +15,11 @@ function UserProvider({ children }: { children: ReactNode }) {
     const unsubAuth = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser === null) {
         setUser(null);
-        return;
+      } else {
+        const user = await createUserProfile(currentUser);
+        setUser(user);
       }
 
-      const user = await createUserProfile(currentUser);
-      setUser(user);
       setLoading(false);
     });
 
