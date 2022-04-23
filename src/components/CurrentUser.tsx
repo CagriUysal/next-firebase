@@ -3,16 +3,16 @@ import dayjs from "dayjs";
 import { DATE_FORMAT } from "constants/date";
 import { auth } from "utils/firebase";
 
-function CurrentUser({
-  displayName,
-  photoURL,
-  email,
-  createdAt,
-  children,
-}: any) {
+function CurrentUser({ user }: any) {
+  const { displayName, photoURL, email, createdAt, children } = user;
+
   const handleSignOut = () => {
     auth.signOut();
   };
+
+  if (user === null) {
+    return null;
+  }
 
   return (
     <section className="CurrentUser">

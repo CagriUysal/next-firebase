@@ -1,7 +1,13 @@
+import { useContext } from "react";
+
+import { PostsContext } from "context/Posts";
+
 import Post from "./Post";
 import AddPost from "./AddPost";
 
-function Posts({ posts }: any) {
+function Posts() {
+  const posts = useContext(PostsContext);
+
   return (
     <section className="Posts">
       <AddPost />

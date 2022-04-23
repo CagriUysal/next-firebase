@@ -19,7 +19,6 @@ function AddPost() {
       return;
     }
 
-    console.log(currentUser);
     const { uid, displayName, email, photoURL } = currentUser;
     const post = {
       title,
