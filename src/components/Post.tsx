@@ -1,8 +1,18 @@
+import { useContext } from "react";
 import dayjs from "dayjs";
 import { doc, deleteDoc, updateDoc, increment } from "firebase/firestore";
 
 import { DATE_FORMAT } from "constants/date";
 import { db } from "utils/firebase";
+import { UserContext } from "context/User";
+
+const belongToCurrentUser = (currentUser: any, postAuthor: any) => {
+  if (!currentUser) {
+    return false;
+  }
+
+  return currentUser.uid === postAuthor.uid;
+};
 
 function Post({
   id,
@@ -13,6 +23,7 @@ function Post({
   favorites,
   comments,
 }: any) {
+  const { currentUser } = useContext(UserContext);
   const postRef = doc(db, "posts", id);
 
   const handleStar = () => updateDoc(postRef, { favorites: increment(1) });
@@ -45,9 +56,11 @@ function Post({
           <button className="star" onClick={handleStar}>
             Star
           </button>
-          <button className="delete" onClick={handleDelete}>
-            Delete
-          </button>
+          {belongToCurrentUser(currentUser, user) && (
+            <button className="delete" onClick={handleDelete}>
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </article>

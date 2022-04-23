@@ -3,21 +3,23 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import { auth, createUserProfile } from "utils/firebase";
 
-export const UserContext = createContext({} as { user: any; loading: boolean });
+export const UserContext = createContext(
+  {} as { currentUser: any; loading: boolean }
+);
 
 function UserProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   useEffect(() => {
     setLoading(true);
 
     const unsubAuth = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser === null) {
-        setUser(null);
+        setCurrentUser(null);
       } else {
         const user = await createUserProfile(currentUser);
-        setUser(user);
+        setCurrentUser(user);
       }
 
       setLoading(false);
@@ -27,7 +29,7 @@ function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ currentUser, loading }}>
       {children}
     </UserContext.Provider>
   );

@@ -6,13 +6,17 @@ import CurrentUser from "./CurrentUser";
 import SignInAndSignUp from "./SignInAndSignUp";
 
 function Authentication() {
-  const { user, loading } = useContext(UserContext);
+  const { currentUser, loading } = useContext(UserContext);
 
   if (loading) {
     return null;
   }
 
-  return <>{user ? <CurrentUser user={user} /> : <SignInAndSignUp />}</>;
+  return (
+    <>
+      {currentUser ? <CurrentUser user={currentUser} /> : <SignInAndSignUp />}
+    </>
+  );
 }
 
 export default Authentication;
