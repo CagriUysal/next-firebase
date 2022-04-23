@@ -1,3 +1,4 @@
+import Link from "next/link";
 import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "constants/date";
@@ -19,7 +20,10 @@ function CurrentUser({ user }: any) {
       <div className="CurrentUser--profile">
         {photoURL && <img src={photoURL} alt={displayName} />}
         <div className="CurrentUser--information">
-          <h2>{displayName}</h2>
+          <Link href="/userprofile">
+            <h2 className="link">{displayName}</h2>
+          </Link>
+
           <p className="email">{email}</p>
           <p className="created-at">
             {dayjs(createdAt.toDate()).format(DATE_FORMAT)}
