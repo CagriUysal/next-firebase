@@ -4,9 +4,10 @@ import { collection, doc, onSnapshot, setDoc } from "firebase/firestore";
 
 import Post from "components/Post";
 import Comments from "components/Comments";
+import withUser from "components/withUser";
 import { db } from "utils/firebase";
 
-function Posts() {
+function Posts({ currentUser }: any) {
   const [post, setPost] = useState<any>(null);
   const [comments, setComments] = useState<any[]>([]);
 
@@ -37,7 +38,7 @@ function Posts() {
   }, []);
 
   const handleCreateComment = (comment: any) => {
-    setDoc(doc(commentsRef), { ...comment });
+    setDoc(doc(commentsRef), { ...comment, user: currentUser });
   };
 
   return (
@@ -48,4 +49,4 @@ function Posts() {
   );
 }
 
-export default Posts;
+export default withUser(Posts);
