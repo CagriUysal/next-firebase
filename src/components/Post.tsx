@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import dayjs from "dayjs";
+import Link from "next/link";
 import { doc, deleteDoc, updateDoc, increment } from "firebase/firestore";
+import dayjs from "dayjs";
 
 import { DATE_FORMAT } from "constants/date";
 import { db } from "utils/firebase";
@@ -24,7 +25,7 @@ function Post({
   comments,
 }: any) {
   const { currentUser } = useContext(UserContext);
-  const postRef = doc(db, "posts", id);
+  const postRef = doc(db, `posts/${id}`);
 
   const handleStar = () => updateDoc(postRef, { favorites: increment(1) });
   const handleDelete = () => deleteDoc(postRef);
@@ -32,7 +33,9 @@ function Post({
   return (
     <article className="Post">
       <div className="Post--content">
-        <h3>{title}</h3>
+        <Link href={`/posts/${id}`}>
+          <h3 className="link">{title}</h3>
+        </Link>
         <div>{content}</div>
       </div>
       <div className="Post--meta">

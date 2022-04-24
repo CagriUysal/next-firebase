@@ -6,6 +6,7 @@ function AddComment({ onCreate }: any) {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    onCreate({ content });
     setContent("");
   };
 
